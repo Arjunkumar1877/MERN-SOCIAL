@@ -11,6 +11,9 @@ import morgan from 'morgan';
 // import { register } from 'module';
 import { register } from './controllers/auth.js';
 import authRoute from './routes/auth.js';
+import userRoute from './routes/users.js';
+import postRoute from './routes/post.js';
+import { verifyToken } from './middlewares/auth.js';
 
 
 //  CONFIGURATIONS 
@@ -37,12 +40,15 @@ const storage = multer.diskStorage({
     }
 });
 const upload = multer({ storage });
+// ROUTES WITH FILES 
+app.post("/auth/register", upload.single("picture"), register);
+app.post("/posts", verifyToken, upload.single("picture"), )
 
 
 // ROUTES
-app.post("/auth/register", upload.single("picture"), register);
 app.use("/auth", authRoute);
-
+app.use('/user', userRoute);
+app.use("/posts", postRoute);
 
 // MONGOOSE SETUP
 const PORT = process.env.PORT || 6001;
