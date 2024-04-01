@@ -1,5 +1,8 @@
-const { default: styled } = require("@emotion/styled");
-const { Box } = require("@mui/material");
+import styled from "@emotion/styled";
+import { Box } from "@mui/material";
+
+// const { default: styled } = require("@emotion/styled");
+styled
 
 
 const WidgetWrapper = styled(Box)(({theme})=> ({
