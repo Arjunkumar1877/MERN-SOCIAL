@@ -7,6 +7,6 @@ router.post("/", verifyToken, getFeedPost)
 router.get("/:userId/posts", verifyToken, getUserPosts)
 
 
-router.patch("/:id/like", verifyToken, likePost)
+router.put("/:id/like", verifyToken, likePost)
 
 export default router;

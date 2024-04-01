@@ -162,6 +162,7 @@ import {
               backgroundColor: palette.primary.main,
               borderRadius: "3rem",
             }}
+            // disabled={!post}
           >
             POST
           </Button>

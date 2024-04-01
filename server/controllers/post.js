@@ -52,7 +52,8 @@ export const likePost = async(req, res)=>{
     try {
         const { id } = req.params;
         const { userId } = req.body;
-        const post = await Post.find();
+        console.log(id + "    " + userId)
+        const post = await Post.findById(id);
         const isLiked = post.likes.get(userId);
         console.log(isLiked, "is liked 😊" );
 
@@ -67,7 +68,7 @@ export const likePost = async(req, res)=>{
         }, {new: true})
 
 
-        res.status(200).json(post);
+        res.status(200).json(updatedPost);
     }catch(err){
         res.status(500).json({error: err.message})
     }

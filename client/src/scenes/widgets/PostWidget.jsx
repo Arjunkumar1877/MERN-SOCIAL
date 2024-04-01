@@ -35,8 +35,9 @@ const PostWidget = ({
   const primary = palette.primary.main;
 
   const patchLike = async () => {
+    // console.log("like clicked")
     const response = await fetch(`http://localhost:3001/posts/${postId}/like`, {
-      method: "",
+      method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
