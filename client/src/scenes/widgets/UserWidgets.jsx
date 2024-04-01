@@ -83,6 +83,7 @@ const UserWidgets = ({userId, picturePath}) => {
         </Box>
         </Box>
 
+        <Divider />
 
         <Box p={"1rem 0"}>
        <FlexBetween mb={"0.5rem"}>
@@ -103,6 +104,7 @@ const UserWidgets = ({userId, picturePath}) => {
         </Typography>
        </FlexBetween>
         </Box>
+        <Divider />
 
 
         <Box p={"1rem 0"}>

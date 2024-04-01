@@ -1,4 +1,4 @@
-import { Express } from "express";
+// import { Express } from "express";
 import { User } from "../models/User.js";
 import { Post } from "../models/Post.js";
 

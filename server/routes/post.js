@@ -1,8 +1,9 @@
 import express from 'express';
 import { verifyToken } from '../middlewares/auth.js';
+import { createPost } from '../controllers/post.js'
 const router = express.Router();
 
-router.get("/", verifyToken, )
+router.post("/", verifyToken, createPost)
 router.get("/:userId/posts", verifyToken, )
 
 
