@@ -12,9 +12,9 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setLogin } from "redux/slice";
+import { setLogin } from "../../redux/slice";
 import Dropzone from "react-dropzone";
-import FlexBetween from "components/FlexBetween";
+import FlexBetween from "../../components/FlexBetween";
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("required"),
@@ -54,14 +54,63 @@ const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
-  
-  const register = async(values, onSubmitProps)=>{
-  
+
+  const register = async (values, onSubmitProps) => {
+    try {
+      const formData = new FormData();
+      for (let value in values) {
+        formData.append(value, values[value]);
+      }
+      formData.append("picturePath", values.picture.name);
+
+      const saveUserResponse = await fetch(
+        "http://localhost:3001/auth/register",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const savedUser = await saveUserResponse.json();
+      onSubmitProps.resetForm();
+
+      if (savedUser) {
+        setPageType("login");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const login = async (values, onSubmitProps) => {
+    try {
+      const loggedInResponse = await fetch("http://localhost:3001/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+
+      const loggedIn = await loggedInResponse.json();
+      onSubmitProps.resetForm();
+      console.log(loggedInResponse);
+
+      console.log(loggedIn)
+      if (loggedInResponse.ok) {
+        dispatch(
+          setLogin({
+            user: loggedIn.resData,
+            token: loggedIn.token,
+          })
+        );
+        navigate("/home");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   const handleFormSubmit = async (values, onSubmitProps) => {
-    if(isLogin) await login(values, onSubmitProps);
-    if(isRegister) await registerSchema(values, onSubmitProps);
-
-
+    if (isLogin) await login(values, onSubmitProps);
+    if (isRegister) await register(values, onSubmitProps);
   };
 
   return (
